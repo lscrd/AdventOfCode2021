@@ -13,7 +13,6 @@ let numbers = input.readLine().split(',').mapIt(parseInt(it))
 # Read boards.
 var boards: seq[Board]
 var iRow: int
-
 while not input.endOfFile:
   let line = input.readLine().splitWhitespace()
   if line.len == 0:
@@ -26,6 +25,7 @@ while not input.endOfFile:
   inc iRow
   for iCol, value in line:
     boards[^1][iRow][iCol] = parseInt(value)
+input.close()
 
 proc rowMarked(board: Board; iRow: int): bool =
   ## Check if all numbers in a board row are marked.
