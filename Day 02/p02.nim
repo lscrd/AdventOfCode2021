@@ -1,4 +1,4 @@
-import strutils
+import std/strutils
 
 type Command {.pure.} = enum Forward = "forward", Up = "up", Down = "down"
 
