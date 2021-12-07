@@ -1,4 +1,4 @@
-import algorithm, math, strutils
+import std/[algorithm, math, strutils]
 
 # Number of lanternfishes for each remaining days.
 type Count = array[0..8, int]
