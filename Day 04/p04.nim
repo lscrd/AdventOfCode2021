@@ -8,7 +8,7 @@ type Board = array[BoardSize, array[BoardSize, int]]
 
 # Read numbers.
 let input = open("p04.data")
-let numbers = input.readLine().split(',').mapIt(parseInt(it))
+let numbers = input.readLine().split(',').map(parseInt)
 
 # Read boards.
 var boards: seq[Board]
