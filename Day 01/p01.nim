@@ -1,4 +1,4 @@
-import strutils, sugar
+import std/[strutils, sugar]
 
 # Read values.
 let values = collect:
