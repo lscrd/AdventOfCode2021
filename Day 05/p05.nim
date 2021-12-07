@@ -1,4 +1,4 @@
-import strscans, tables
+import std/[strscans, tables]
 
 type
   Point = (int, int)
