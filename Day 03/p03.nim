@@ -1,4 +1,4 @@
-import sequtils, strutils
+import std/[sequtils, strutils]
 
 let numbers = toSeq(lines("p03.data"))
 let length = numbers[0].len
