@@ -42,7 +42,7 @@ echo "Part 1 answer: ", count
 proc value(entry: Entry): int =
   ## Return the value displayed by an entry.
 
-  var mapping: Table[char, char]  # Mapping for wrong segment value to right one.
+  var mapping: Table[char, char]  # Mapping from wrong segment value to right one.
 
   # First step.
   # Count the occurrences of each segment in the ten patterns.
