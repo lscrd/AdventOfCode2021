@@ -75,7 +75,7 @@ proc value(entry: Entry): int =
   for c in pattern7 - pattern1:
     mapping[c] = 'a'
 
-  # Pattern for 4 has two more segments than pattern for 1 and these segments maps to 'b' and 'd'.
+  # Pattern for 4 has two more segments than pattern for 1 and these segments map to 'b' and 'd'.
   # As 'b' is already mapped to, the segment with no mapping maps to 'd'.
   for c in pattern4 - pattern1:
     if c notin mapping: mapping[c] = 'd'
