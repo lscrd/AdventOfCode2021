@@ -6,8 +6,8 @@ type
   Position {.pure.} = enum None, Left, Right  # None used for first OpenPair.
 
   Element = object
-    position: Position    # Significant if kind is OpenPair or Value.
     kind: Kind
+    position: Position    # Significant if kind is OpenPair or Value.
     value: int            # Significant if kind is Value.
 
   # Representation of a Snailfish number.
