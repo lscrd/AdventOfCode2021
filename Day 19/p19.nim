@@ -26,12 +26,10 @@ var coords: Vector
 var data: ScannerData
 for line in lines("p19.data"):
   if line.startsWith("---"):
-    # Allocate a new sequence to store beacon coordinates.
     discard line.scanf("--- scanner $i ---", num)
     assert data.len == num
     data.add @[]
   elif line.len != 0:
-    # Add beacon coordinates to scanner data.
     discard line.scanf("$i,$i,$i", coords[0], coords[1], coords[2])
     data[^1].add coords
 
