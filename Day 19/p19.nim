@@ -62,9 +62,10 @@ proc compare(b1, b2: Beacons): tuple[match: bool; shift, perm, mult: Vector] =
         shift = v2 - v1
         var count = 1
         for i in (i0 + 1)..b1.high:
-          if b1[i] + shift in s2: inc count
-        if count >= 12:
-          return (true, shift, perm, mult)
+          if b1[i] + shift in s2:
+            inc count
+            if count == 12:
+              return (true, shift, perm, mult)
 
 
 proc process(data: ScannerData) =
