@@ -63,6 +63,7 @@ proc compare(b1, b2: Beacons): tuple[match: bool; shift, perm, mult: Vector] =
         var count = 1
         for i in (i0 + 1)..b1.high:
           if b1[i] + shift in s2:
+            # The shifted position belongs to the set of "b2" rotated positions.
             inc count
             if count == 12:
               return (true, shift, perm, mult)
