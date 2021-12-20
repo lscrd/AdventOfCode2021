@@ -46,7 +46,7 @@ func rotated(v, perm, mult: Vector): Vector =
 
 
 iterator rotations(): tuple[perm, mult: Vector] =
-  ## Yield the successive permutations.
+  ## Yield the successive rotations.
   for (perm, mults) in Rotations:
     for mult in mults:
       yield (perm, mult)
