@@ -21,7 +21,7 @@ proc move(pos: var int; val: int) =
 # Part 1.
 
 proc rollDeterministic(): int =
-  ## Return te result of a roll of the deterministic die.
+  ## Return the result of a roll of the deterministic die.
   var n {.global.} = 0
   inc n
   result = n
