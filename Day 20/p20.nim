@@ -47,7 +47,7 @@ proc enhanced(img: Image; ieaString: string): Image =
   # Set the background value for the result.
   result.background = '.'
   if ieaString[0] == '#' and image.background == '.':
-    # The IEA string reverse the background value.
+    # The IEA string reverses the background value.
     result.background = '#'
 
 
