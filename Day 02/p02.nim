@@ -8,6 +8,7 @@ for line in lines("p02.data"):
   let fields = line.split()
   commands.add (parseEnum[Command](fields[0]), parseInt(fields[1]))
 
+
 ### Part 1 ###
 
 var pos, depth = 0
@@ -18,6 +19,7 @@ for (command, value) in commands:
   of Down: inc depth, value
 
 echo "Part 1: ", pos * depth
+
 
 ### Part 2 ###
 
