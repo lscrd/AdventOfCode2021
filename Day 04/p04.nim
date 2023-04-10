@@ -24,7 +24,7 @@ while not input.endOfFile:
     boards.setLen(boards.len + 1)
   inc iRow
   for iCol, value in line:
-    boards[^1][iRow][iCol] = parseInt(value)
+    boards[^1][iRow][iCol] = value.parseInt()
 input.close()
 
 proc rowMarked(board: Board; iRow: int): bool =
@@ -57,7 +57,9 @@ proc value(board: var Board; num: int): int =
         return sum(board)
   result = -1
 
-# Part 1.
+
+### Part 1 ###
+
 var save = boards    # Make a copy of boards.
 for num in numbers:
   var boardValue = -1
@@ -65,10 +67,12 @@ for num in numbers:
     boardValue = board.value(num)
     if boardValue >= 0: break
   if boardValue >= 0:
-    echo "Part 1 answer: ", num * boardValue
+    echo "Part 1: ", num * boardValue
     break
 
-# Part 2.
+
+### Part 2 ###
+
 boards = save
 for num in numbers:
   var boardValue = -1
@@ -79,5 +83,5 @@ for num in numbers:
   # Remove winning boards.
   for i in winList: boards.delete(i)
   if boards.len == 0:
-    echo "Part 2 answer: ", num * boardValue
+    echo "Part 2: ", num * boardValue
     break
