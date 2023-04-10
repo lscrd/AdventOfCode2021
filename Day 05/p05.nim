@@ -32,6 +32,7 @@ iterator expansion(line: Line; withDiagonals: bool): Point =
   else:
     discard   # Diagonal line excluded.
 
+
 var points: CountTable[Point]   # Count the number of occurrences of points.
 
 proc overlapCount(points: CountTable[Point]): int =
@@ -39,15 +40,19 @@ proc overlapCount(points: CountTable[Point]): int =
   for count in points.values:
     if count >= 2: inc result
 
-# Part 1.
+
+### Part 1 ###
+
 for line in lines:
   for point in expansion(line, false):
     points.inc(point)
-echo "Part 1 answer: ", points.overlapCount()
+echo "Part 1: ", points.overlapCount()
 
-# Part 2.
+
+### Part 2 ###
+
 points.reset()
 for line in lines:
   for point in expansion(line, true):
     points.inc(point)
-echo "Part 2 answer: ", points.overlapCount()
+echo "Part 2: ", points.overlapCount()
