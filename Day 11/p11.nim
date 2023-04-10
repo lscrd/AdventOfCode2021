@@ -1,63 +1,104 @@
-const
-  Size = 10
-  OctopusCount = Size * Size
+import std/[sequtils, setutils, strutils, tables]
 
 type
-  Level = uint8
-  Grid = array[Size, array[Size, Level]]
-  Position = (int, int)
 
-var grid: Grid
+  # Representation of a digit as a set of segment names.
+  SegSet = set[char]
 
-var i = 0
-for line in lines("p11.data"):
-  for j, c in line: grid[i][j] = uint8(ord(c) - ord('0'))
-  inc i
+  # Representation of an entry
+  Entry = tuple
+    patterns: seq[SegSet]   # Patterns describing the ten digits.
+    output: seq[SegSet]     # Patterns describing the four output digits.
 
-iterator neighbors(grid: Grid; i, j: int): Position =
-  ## Yield the levels of the neighbors of an octopus.
-  for (drow, dcol) in [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]:
-    let r = i + drow
-    let c = j + dcol
-    if r in 0..<Size and c in 0..<Size:
-      yield (r, c)
+const
 
-proc doStep(grid: var Grid): int =
-  ## Do a step. Return the number of flash lights encountered during this step.
+  # Mapping of unique pattern lengths to digit values.
+  UniqueSegDigits = {2: 1, 4: 4, 3: 7, 7: 8}.toTable
 
-  # Increment all levels.
-  for row in grid.mitems:
-    for level in row.mitems:
-      inc level
+  # Mapping of segment sets to digit value.
+  Digits = {"abcefg".toSet: 0, "cf".toSet: 1, "acdeg".toSet: 2, "acdfg".toSet: 3,
+            "bcdf".toSet: 4, "abdfg".toSet: 5, "abdefg".toSet: 6, "acf".toSet: 7,
+            "abcdefg".toSet: 8, "abcdfg".toSet: 9}.toTable
 
-  # Flash lights until there is no more change.
-  var flashList: seq[Position]
-  while true:
-    result = flashList.len
-    for i in 0..<Size:
-      for j in 0..<Size:
-        if grid[i][j] > 9:
-          flashList.add (i, j)
-          grid[i][j] = 0
-          # Increment levels of neighbors if they have not flashed.
-          for pos in grid.neighbors(i, j):
-            if pos notin flashList:
-              inc grid[pos[0]][pos[1]]
-    if result == flashList.len:
-      break   # No change.
 
-# Part 1.
-let save = grid   # Save the grid for part 2.
-var flashCount: int
-for _ in 1..100:
-  inc flashCount, grid.doStep()
-echo "Part 1 answer: ", flashCount
+# Parse the list of entries.
+var entries: seq[Entry]
+for line in lines("p08.data"):
+  let fields = line.split(" | ")
+  entries.add (fields[0].split().mapIt(it.toSet), fields[1].split().mapIt(it.toSet))
 
-grid = save
-var step = 0
-# Do a step until all octopuses have flashed in a step.
-while true:
-  inc step
-  if grid.doStep() == OctopusCount:
-    break
-echo "Part 2 answer: ", step
+
+### Part 1 ###
+
+var count = 0
+for entry in entries:
+  for digit in entry.output:
+    if digit.len in UniqueSegDigits:
+      inc count
+echo "Part 1: ", count
+
+
+### Part 2 ###
+
+proc value(entry: Entry): int =
+  ## Return the value displayed by an entry.
+
+  var mapping: Table[char, char]  # Mapping from wrong segment value to right one.
+
+  # First step.
+  # Count the occurrences of each segment in the ten patterns.
+  var counts: array['a'..'g', int]
+  for pattern in entry.patterns:
+    for c in pattern:
+      inc counts[c]
+
+  # Map segments corresponding to 'b', 'e' and 'f'.
+  var list7, list8: seq[char]   # List of segments which occur 7 and 8 times.
+  for c, count in counts:
+    case count
+    of 4: mapping[c] = 'e'
+    of 6: mapping[c] = 'b'
+    of 7: list7.add c       # Will map to 'd' and 'g'.
+    of 8: list8.add c       # Will map to 'a' and 'c'.
+    of 9: mapping[c] = 'f'
+    else: discard
+
+  # Find patterns which represent 1, 4 and 7.
+  var pattern1, pattern4, pattern7: SegSet
+  for pattern in entry.patterns:
+    case pattern.len
+    of 2: pattern1 = pattern
+    of 3: pattern7 = pattern
+    of 4: pattern4 = pattern
+    else: discard
+
+  # Pattern for 7 has one more segment than pattern for 1 and this segment maps to 'a'.
+  for c in pattern7 - pattern1:
+    mapping[c] = 'a'
+
+  # Pattern for 4 has two more segments than pattern for 1 and these segments map to 'b' and 'd'.
+  # As 'b' is already mapped to, the segment with no mapping maps to 'd'.
+  for c in pattern4 - pattern1:
+    if c notin mapping: mapping[c] = 'd'
+
+  # Segments which occur 7 times map to 'd' and 'g'.
+  # As 'd' is already mapped to, the segment with no mapping maps to 'g'.
+  for c in list7:
+    if c notin mapping: mapping[c] = 'g'
+
+  # Segments which occur 8 times map to 'a' and 'c'.
+  # As 'a' is already mapped to, the segment with no mapping maps to 'c'.
+  for c in list8:
+    if c notin mapping: mapping[c] = 'c'
+
+  # Now, using the mapping, build the four digits output.
+  for pattern in entry.output:
+    var truePattern: SegSet
+    for c in pattern: truePattern.incl mapping[c]
+    result = 10 * result + Digits[truePattern]
+
+
+var res = 0
+for entry in entries:
+  res += entry.value()
+echo "Part 2: ", res
