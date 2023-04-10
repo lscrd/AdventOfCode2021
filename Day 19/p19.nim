@@ -35,22 +35,18 @@ for line in lines("p19.data"):
     data[^1].add coords
 
 
-# Addition and subtraction of vectors.
-func `+`(a, b: Vector): Vector = [a[0] + b[0], a[1] + b[1], a[2] + b[2]]
+# Subtraction of vectors.
 func `-`(a, b: Vector): Vector = [a[0] - b[0], a[1] - b[1], a[2] - b[2]]
-
 
 func rotated(v, perm, mult: Vector): Vector =
   ## Return the coordinates of a vector rotated using a permutation and a multiplication vectors.
   [v[perm[0]] * mult[0], v[perm[1]] * mult[1], v[perm[2]] * mult[2]]
-
 
 iterator rotations(): tuple[perm, mult: Vector] =
   ## Yield the successive rotations.
   for (perm, mults) in Rotations:
     for mult in mults:
       yield (perm, mult)
-
 
 proc find(b1: BeaconSet; b2: Beacons): tuple[match: bool; shift, perm, mult: Vector] =
   ## Compare a list of beacons with a beacon set and return a tuple indicating if a match has
@@ -64,12 +60,14 @@ proc find(b1: BeaconSet; b2: Beacons): tuple[match: bool; shift, perm, mult: Vec
         shift = v2 - v1
         var count = 1
         for i in (i0 + 1)..b2.high:
-          if b2[i].rotated(perm, mult) - shift in b1:
-            # The rotated and shifted position belongs to the known set of beacons.
+          if (b2[i].rotated(perm, mult) - shift) in b1:
+            # The rotated and shifted position belongs to the known set of beacon positions.
             inc count
             if count == 12:
               return (true, shift, perm, mult)
 
+
+### Parts 1 and 2 ###
 
 proc process(data: ScannerData) =
   ## Process data and print results for parts 1 and 2.
@@ -100,7 +98,7 @@ proc process(data: ScannerData) =
     for beacon in data[scanner]:
       beacons.incl beacon.rotated(perm, mult) - shift
 
-  echo "Part 1 answer: ", beacons.len
+  echo "Part 1: ", beacons.len
 
   # Find the largest Manhattan distance between scanners.
   var largest = 0
@@ -111,6 +109,6 @@ proc process(data: ScannerData) =
       let d = abs(v2[0] - v1[0]) + abs(v2[1] - v1[1]) + abs(v2[2] - v1[2])
       if d > largest: largest = d
 
-  echo "Part 2 answer: ", largest
+  echo "Part 2: ", largest
 
 data.process()
