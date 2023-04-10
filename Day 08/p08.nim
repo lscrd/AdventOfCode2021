@@ -101,4 +101,4 @@ proc value(entry: Entry): int =
 var res = 0
 for entry in entries:
   res += entry.value()
-echo "Part 2:", res
+echo "Part 2: ", res
