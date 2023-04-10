@@ -6,7 +6,7 @@ type Count = array[0..8, int]
 let input = open("p06.data")
 var lanternFishCount: Count
 for value in input.readLine().split(','):
-  lanternFishCount[parseInt(value)].inc
+  lanternFishCount[value.parseInt].inc
 input.close()
 
 proc doStep(lanternFishCount: var Count) =
@@ -14,12 +14,16 @@ proc doStep(lanternFishCount: var Count) =
   lanternFishCount.rotateLeft(1)
   lanternFishCount[6].inc lanternFishCount[8]
 
-# Part 1.
+
+### Part 1 ###
+
 for _ in 1..80:
   lanternFishCount.doStep()
-echo "Part 1 answer: ", sum(lanternFishCount)
+echo "Part 1: ", sum(lanternFishCount)
 
-# Part 2.
+
+### Part 2 ###
+
 for _ in 81..256:
   lanternFishCount.doStep()
-echo "Part 2 answer: ", sum(lanternFishCount)
+echo "Part 2: ", sum(lanternFishCount)
