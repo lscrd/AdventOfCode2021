@@ -39,8 +39,8 @@ for line in lines("p10.data"):
 
 
 # Part 1.
-echo "Part 1 answer: ", score1Sum
+echo "Part 1: ", score1Sum
 
 # Part 2.
 scores2.sort()
-echo "Part 2 answer: ", scores2[scores2.len div 2]
+echo "Part 2: ", scores2[scores2.len div 2]
