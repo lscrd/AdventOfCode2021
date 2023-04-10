@@ -1,4 +1,4 @@
-import std/[strscans, strutils]
+import std/strscans
 
 type
   Vector = tuple[x, y: int]
@@ -6,7 +6,7 @@ type
 
 # Read target.
 var target: Target
-let input = readFile("p17.data").strip()
+let input = readLines("p17.data", 1)[0]
 discard input.scanf("target area: x=$i..$i, y=$i..$i",
                     target.xMin, target.xMax, target.yMin, target.yMax)
 
@@ -31,7 +31,7 @@ proc height(velocity: Vector; target: Target) : int =
       return -1
 
 
-# Part 1.
+### Part 1 ###
 
 proc findVelocity(target: Target): tuple[velocity: Vector, height: int] =
   ## Find the velocity which gives the greatest height.
@@ -44,10 +44,10 @@ proc findVelocity(target: Target): tuple[velocity: Vector, height: int] =
       if h > result.height:
         result = (v, h)
 
-echo "Part 1 answer: ", target.findVelocity()
+echo "Part 1: ", target.findVelocity()
 
 
-# Part 2.
+### Part 2 ##
 
 proc velocityCount(target: Target): int =
   ## Return the number of velocities allowing to reach the target.
@@ -60,4 +60,4 @@ proc velocityCount(target: Target): int =
       let h = height(v, target)
       if h >= 0: inc result
 
-echo "Part 2 answer: ", target.velocityCount()
+echo "Part 2: ", target.velocityCount()
