@@ -28,16 +28,17 @@ for line in lines("p08.data"):
   entries.add (fields[0].split().mapIt(it.toSet), fields[1].split().mapIt(it.toSet))
 
 
-# Part 1.
+### Part 1 ###
+
 var count = 0
 for entry in entries:
   for digit in entry.output:
     if digit.len in UniqueSegDigits:
       inc count
-echo "Part 1 answer: ", count
+echo "Part 1: ", count
 
 
-# Part 2.
+### Part 2 ###
 
 proc value(entry: Entry): int =
   ## Return the value displayed by an entry.
@@ -100,4 +101,4 @@ proc value(entry: Entry): int =
 var res = 0
 for entry in entries:
   res += entry.value()
-echo "Part 2 answwer ", res
+echo "Part 2:", res
