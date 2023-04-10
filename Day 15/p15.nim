@@ -9,13 +9,16 @@ var grid: Grid
 
 
 proc `[]`(grid: Grid; pos: Position): Digit =
+  ## Return value in grid at given position.
   grid[pos.y][pos.x]
 
 proc `[]=`(grid: var Grid; pos: Position; val: Digit) =
+  ## Set value in grid at given position.
   grid[pos.y][pos.x] = val
 
 
 iterator neighbors(grid: Grid; pos: Position): Position =
+  ## Yield the neighbor positions of given position.
   if pos.x > 0: yield (pos.x - 1, pos.y)
   if pos.x < grid.high: yield (pos.x + 1, pos.y)
   if pos.y > 0: yield (pos.x, pos.y - 1)
@@ -45,11 +48,12 @@ for line in lines("p15.data"):
   grid.add collect(for c in line: Digit(ord(c) - ord('0')))
 
 
-# Part 1.
-echo "Part 1 answer: ", grid.minRisk()
+### Part 1 ###
+
+echo "Part 1: ", grid.minRisk()
 
 
-# Part 2.
+### Part 2 ###
 
 # Build full grid.
 let size = grid.len
@@ -69,4 +73,4 @@ for x in 0..fullGrid.high:
       val = if val == 9: 1 else: val + 1
       fullGrid[(x, y + i * size)] = val
 
-echo "Part 2 answer: ", fullGrid.minRisk()
+echo "Part 2: ", fullGrid.minRisk()
