@@ -4,10 +4,13 @@ type Area = seq[string]
 
 var area: Area = collect(for line in lines("p25.data"): line)
 
-proc `$`(area: Area): string =
+proc `$`(area: Area): string {.used.} =
   ## Return the string representation of the area.
   ## Used for debugging purpose.
   area.join("\n")
+
+
+### Part 1 ###
 
 proc moveEast(area: var Area): bool =
   ## Move the sea cucumbers to the east.
@@ -45,4 +48,8 @@ while changed:
   inc count
   changed = area.moveEast() or area.moveSouth()
 
-echo "Part 1 answer: ", count
+echo "Part 1: ", count
+
+
+### Part 2 ###
+echo "Part 2: done"
