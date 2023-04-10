@@ -66,8 +66,10 @@ proc pathCount(cave: Cave; allowTwice: bool): int =
       neighbor.visited = visited
 
 
-# Part 1.
-echo "Part 1 answer: ", pathCount(caves["start"], false)
+### Part 1 ###
 
-# Part 2.
-echo "Part 2 answer: ", pathCount(caves["start"], true)
+echo "Part 1: ", pathCount(caves["start"], false)
+
+
+### Part 2 ###
+echo "Part 2: ", pathCount(caves["start"], true)
