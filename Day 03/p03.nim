@@ -5,6 +5,7 @@ let length = numbers[0].len
 
 
 ### Part 1 ###
+
 var gammaRate, epsilonRate = 0
 for pos in 0..<length:
   var zeroes, ones = 0
