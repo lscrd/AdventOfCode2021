@@ -18,7 +18,7 @@ proc moveEast(area: var Area): bool =
   let imax = area.high
   let jmax = area[0].high
   for i in 0..imax:
-    var row = area[i]   # Copy the row before moving.
+    let row = collect(for j in 0..jmax: area[i][j])   # Copy the row before moving.
     for j in 0..jmax:
       if row[j] == '>':
         let nextj = if j == jmax: 0 else: j + 1
@@ -33,7 +33,7 @@ proc moveSouth(area: var Area): bool =
   let imax = area.high
   let jmax = area[0].high
   for j in 0..jmax:
-    var col = collect(for i in 0..imax: area[i][j])   # Copy the column before moving.
+    let col = collect(for i in 0..imax: area[i][j])   # Copy the column before moving.
     for i in 0..imax:
       if col[i] == 'v':
         let nexti = if i == imax: 0 else: i + 1
@@ -46,7 +46,8 @@ var count = 0
 var changed = true
 while changed:
   inc count
-  changed = area.moveEast() or area.moveSouth()
+  changed = area.moveEast()
+  changed = area.moveSouth() or changed
 
 echo "Part 1: ", count
 
