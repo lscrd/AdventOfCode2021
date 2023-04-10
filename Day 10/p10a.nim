@@ -5,7 +5,7 @@ import std/[algorithm, sequtils, tables]
 const MatchingChars = {'(': ')', '[': ']', '{': '}', '<': '>'}.toTable
 
 
-# Part 1.
+### Part 1 ###
 
 const IncorrectScores = {')': 3, ']': 57, '}': 1197, '>': 25137}.toTable
 
@@ -26,10 +26,10 @@ for line in lines("p10.data"):
   let score = line.corruptedScore()
   scoreSum.inc score
   if score == 0: nss.add line    # Keep the line for later processing.
-echo "Part 1 answer: ", scoreSum
+echo "Part 1: ", scoreSum
 
 
-# Part 2.
+### Part 2 ###
 
 const MissingScores = {')': 1, ']': 2, '}': 3, '>': 4}.toTable
 
@@ -45,5 +45,5 @@ proc incompleteScore(line: string): int =
   for i in countdown(stack.high, 0):
     result = 5 * result + MissingScores[stack[i]]
 
-let scores = sorted(map(nss, incompleteScore))
-echo "Part 2 answer: ", scores[scores.len div 2]
+let scores = map(nss, incompleteScore).sorted()
+echo "Part 2: ", scores[scores.len div 2]
