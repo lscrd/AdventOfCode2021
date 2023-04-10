@@ -12,12 +12,10 @@ discard input.readLine()  # empty line.
 var image = Image(background: '.', data: collect(for line in input.lines(): line))
 input.close()
 
-
-proc `$`(img: Image): string =
+proc `$`(img: Image): string {.used.} =
   ## Return the image string representation.
   ## Used for debugging purpose.
   img.data.join("\n")
-
 
 proc pixelValue(image: Image; x, y: int): int =
   ## Return the integer value of a pixel.
@@ -34,7 +32,6 @@ proc pixelValue(image: Image; x, y: int): int =
         # Add the background value.
         result += ord(image.background == '#')
 
-
 proc enhanced(img: Image; ieaString: string): Image =
   ## Return the enhanced version of an image using the IEA string provided.
   let lg = img.data.len
@@ -50,19 +47,21 @@ proc enhanced(img: Image; ieaString: string): Image =
     # The IEA string reverses the background value.
     result.background = '#'
 
-
 proc litCount(image: Image): int =
   ## Return the number of lit elements in image.
   for row in image.data:
     inc result, row.count('#')
 
 
-# Part 1.
+### Part 1 ###
+
 for _ in 1..2:
   image = enhanced(image, ieaString)
-echo "Part 1 answer: ", image.litCount()
+echo "Part 1: ", image.litCount()
 
-# Part 2.
+
+### Part 2 ###
+
 for _ in 3..50:
   image = enhanced(image, ieaString)
-echo "Part 2 answer: ", image.litCount()
+echo "Part 2: ", image.litCount()
