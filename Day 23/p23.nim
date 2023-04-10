@@ -201,7 +201,7 @@ proc minimalCost(cells: Cells): int =
 
 ### Part 1 ###
 
-var input = readLines("p23.data", 1)[0].splitLines()
+var input = readFile("p23.data").strip().splitLines()
 var cells = input.processData()
 echo "Part 1: ", cells.minimalCost()
 
