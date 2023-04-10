@@ -44,7 +44,6 @@ func parse(s: string): SnailFishNumber =
     else:
       discard
 
-
 func explodeAt(n: var SnailFishNumber; start: int) =
   ## Explode the pair starting at position "start".
   assert n[start + 1].kind == Value and n[start + 2].kind == Value
@@ -63,7 +62,6 @@ func explodeAt(n: var SnailFishNumber; start: int) =
   # Replace the pair by a null regular value.
   n[start..(start + 3)] = [Element(position: n[start].position, kind: Value, value: 0)]
 
-
 func exploded(n: var SnailFishNumber): bool =
   ## Check, from the left, for a pair to explode and explode it.
   ## Return true as soon as a pair has been exploded.
@@ -80,7 +78,6 @@ func exploded(n: var SnailFishNumber): bool =
     of Value:
       discard
 
-
 func splitted(n: var SnailFishNumber): bool =
   ## Check, from the left, for a regular value to be splitted and split it.
   ## Return true as soon as a regular number has been splitted.
@@ -95,15 +92,13 @@ func splitted(n: var SnailFishNumber): bool =
                  Element(kind: ClosePair)]
       return true
 
-
 func reduce(n: var SnailFishNumber) =
   ## Reduce a Snailfish number.
   while true:
     if not n.exploded() and not n.splitted():
       break
 
-
-func `$`(n: SnailFishNumber): string =
+func `$`(n: SnailFishNumber): string {.used.} =
   ## Return the string representation of a SnailFishNumber.
   ## Used for debugging purpose.
   var pos: seq[Position]
@@ -119,7 +114,6 @@ func `$`(n: SnailFishNumber): string =
         result.add $elem.value
         if elem.position == Left: result.add ','
 
-
 func `+`(a, b: SnailFishNumber): SnailFishNumber =
   ## Compute the addition of two Snailfish numbers.
   var first = a
@@ -128,7 +122,6 @@ func `+`(a, b: SnailFishNumber): SnailFishNumber =
   last[0].position = Right
   result = Element(kind: OpenPair) & first & last & Element(kind: ClosePair)
   result.reduce()
-
 
 func magnitude(n: SnailFishNumber): int =
   ## Compute the magnitude of a Snailfish number.
@@ -140,21 +133,26 @@ func magnitude(n: SnailFishNumber): int =
     of ClosePair: values.add 2 * values.pop() + 3 * values.pop()
   result = values[0]
 
-
 # Read data.
-let numbers = collect(for line in lines("p18.data"): line.parse())
+let numbers = collect:
+                for line in lines("p18.data"):
+                  line.parse()
 
-# Part 1.
+
+### Part 1 ###
+
 var res = numbers[0]
 for i in 1..numbers.high:
   res = res + numbers[i]
-echo "Part 1 answer: ", magnitude(res)
+echo "Part 1: ", magnitude(res)
 
-# Part 2.
+
+### Part 2 ###
+
 var largest = 0
 for i in 0..numbers.high:
   for j in 0..numbers.high:
     if j != i:
       let m = magnitude(numbers[i] + numbers[j])
       if m > largest: largest = m
-echo "Part 2 answer: ", largest
+echo "Part 2: ", largest
