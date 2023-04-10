@@ -22,7 +22,8 @@ proc neighborValues(grid: Grid; i, j: int): seq[Digit] =
   for (a, b) in grid.neighbors(i, j):
     result.add grid[a][b]
 
-# Part 1.
+
+### Part 1 ###
 
 var lowPoints: seq[(int, int)]
 for i in 0..grid.high:
@@ -34,10 +35,10 @@ var riskLevel = 0
 for (i, j) in lowPoints:
   riskLevel.inc grid[i][j] + 1
 
-echo "Part 1 answer: ", riskLevel
+echo "Part 1: ", riskLevel
 
 
-# Part 2.
+### Part 2 ###
 
 proc basinSize(grid: var Grid; i, j: int): int =
   ## Compute recursively the basin size starting from point at (i, j).
@@ -54,4 +55,4 @@ for (i, j) in lowPoints:
   basinSizes.add grid.basinSize(i, j)
 basinSizes.sort(Descending)
 
-echo "Part 2 answer: ", basinSizes[0] * basinSizes[1] * basinSizes[2]
+echo "Part 2: ", basinSizes[0] * basinSizes[1] * basinSizes[2]
