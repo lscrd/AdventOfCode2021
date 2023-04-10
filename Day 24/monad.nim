@@ -7,6 +7,7 @@ proc monad*(input: seq[int]): int =
   x = 0
   x += z
   x = x mod 26
+  z = z div 1
   x += 14
   x = ord(x == w)
   x = ord(x == 0)
@@ -25,6 +26,7 @@ proc monad*(input: seq[int]): int =
   x = 0
   x += z
   x = x mod 26
+  z = z div 1
   x += 15
   x = ord(x == w)
   x = ord(x == 0)
@@ -43,6 +45,7 @@ proc monad*(input: seq[int]): int =
   x = 0
   x += z
   x = x mod 26
+  z = z div 1
   x += 15
   x = ord(x == w)
   x = ord(x == 0)
@@ -80,6 +83,7 @@ proc monad*(input: seq[int]): int =
   x = 0
   x += z
   x = x mod 26
+  z = z div 1
   x += 14
   x = ord(x == w)
   x = ord(x == 0)
@@ -117,6 +121,7 @@ proc monad*(input: seq[int]): int =
   x = 0
   x += z
   x = x mod 26
+  z = z div 1
   x += 15
   x = ord(x == w)
   x = ord(x == 0)
@@ -135,6 +140,7 @@ proc monad*(input: seq[int]): int =
   x = 0
   x += z
   x = x mod 26
+  z = z div 1
   x += 15
   x = ord(x == w)
   x = ord(x == 0)
@@ -153,6 +159,7 @@ proc monad*(input: seq[int]): int =
   x = 0
   x += z
   x = x mod 26
+  z = z div 1
   x += 11
   x = ord(x == w)
   x = ord(x == 0)
