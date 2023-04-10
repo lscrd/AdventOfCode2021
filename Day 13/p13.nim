@@ -56,10 +56,12 @@ proc display(sheet: Sheet) =
 
 
 ### Part 1 ###
+
 echo "Part 1: ", sheet.fold(foldings[0]).positions.len
 
 
 ### Part 2 ###
+
 for folding in foldings:
   sheet = sheet.fold(folding)
 echo "Part 2:"
