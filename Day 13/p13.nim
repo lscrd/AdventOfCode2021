@@ -54,11 +54,13 @@ proc display(sheet: Sheet) =
   for row in grid:
     echo row
 
-# Part 1
-echo "Part 1 answer: ", sheet.fold(foldings[0]).positions.len
 
-# Part 2.
+### Part 1 ###
+echo "Part 1: ", sheet.fold(foldings[0]).positions.len
+
+
+### Part 2 ###
 for folding in foldings:
   sheet = sheet.fold(folding)
-echo "Part 2 answer:"
+echo "Part 2:"
 sheet.display()
