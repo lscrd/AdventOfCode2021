@@ -1,7 +1,6 @@
 import std/[sets, strscans]
 
 type
-
   Range = Slice[int]        # Axis range represented as a slice.
   Cuboid = array[3, Range]
   Action = tuple[on: bool; cuboid: Cuboid]
@@ -16,8 +15,7 @@ for line in lines("p22.data"):
   actions.add (onOff == "on", [xrange, yrange, zrange])
 
 
-
-# Part1.
+### Part1 ###
 
 # Build a grid containing the status of each cube.
 type Subrange = -50..50
@@ -38,11 +36,11 @@ for x in Subrange.low..Subrange.high:
   for y in Subrange.low..Subrange.high:
     for z in Subrange.low..Subrange.high:
       limCount += ord(limGrid[x][y][z])
-echo "Part 1 answer: ", limCount
+
+echo "Part 1: ", limCount
 
 
-
-# Part 2.
+### Part 2 ###
 
 # Representation of the grid as a set of cuboids.
 type Grid = HashSet[Cuboid]
@@ -70,7 +68,7 @@ proc delete(grid: var Grid; c1, c2: Cuboid) =
   ## The result is not optimal as we don't try to limit the number of newly created cuboids.
 
   # First, remove "c1" from grid as we will add new cuboids.
-  grid.excl(c1)
+  grid.excl c1
 
   # Split "c1" in several cuboids and add them to the grid if they are not empty.
   for rx in [c1[0].a..(c2[0].a - 1), c2[0], (c2[0].b + 1)..c1[0].b]:
@@ -99,4 +97,4 @@ for (on, cuboid) in actions:
   if on:
     grid.incl cuboid
 
-echo "Part 2 answer: ", grid.count
+echo "Part 2: ", grid.count
