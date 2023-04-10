@@ -15,6 +15,7 @@ for i in 1..values.high:
 
 echo "Part 1: ", count
 
+
 ### Part 2 ###
 
 prevVal = values[0] + values[1] + values[2]
