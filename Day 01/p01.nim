@@ -5,6 +5,7 @@ let values = collect:
                for line in lines("p01.data"):
                  line.parseInt()
 
+
 ### Part 1 ###
 
 var prevVal = values[0]
