@@ -6,7 +6,7 @@ type Count = array[0..8, int]
 let input = open("p06.data")
 var lanternFishCount: Count
 for value in input.readLine().split(','):
-  lanternFishCount[value.parseInt].inc
+  lanternFishCount[value.parseInt()].inc
 input.close()
 
 proc doStep(lanternFishCount: var Count) =
