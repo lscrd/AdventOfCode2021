@@ -19,9 +19,7 @@ proc translate(code: openArray[string]): seq[string] =
       result.add if op2 == "0": &"  {fields[1]} = 0"
                  else: &"  {fields[1]} *= {fields[2]}"
     of "div":
-      let op2 = fields[2]
-      if op2 != "1":
-        result.add &"  {fields[1]} = {fields[1]} div {fields[2]}"
+      result.add &"  {fields[1]} = {fields[1]} div {fields[2]}"
     of "mod":
       result.add &"  {fields[1]} = {fields[1]} mod {fields[2]}"
     of "eql":
