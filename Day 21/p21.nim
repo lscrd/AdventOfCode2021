@@ -11,6 +11,7 @@ for line in lines("p21.data"):
   var num, pos: int
   discard line.scanf("Player $i starting position: $i", num, pos)
   game[num] = (pos, 0)
+let save = game   # For part 2.
 
 
 proc move(pos: var int; val: int) =
@@ -18,7 +19,7 @@ proc move(pos: var int; val: int) =
   pos = (pos + val - 1) mod 10 + 1
 
 
-# Part 1.
+### Part 1 ###
 
 proc rollDeterministic(): int =
   ## Return the result of a roll of the deterministic die.
@@ -45,13 +46,12 @@ proc playDeterministic(game: var Game): int =
       return game[b].score * rolls
     swap a, b
 
-let save = game
-echo "Part 1 answer: ", game.playDeterministic()
+echo "Part 1: ", game.playDeterministic()
 
 
-# Part 2.
+### Part 2 ###
 
-# Count of won games for each player..
+# Count of won games for each player.
 type Counts = array[Player, int]
 
 # Table to map (game, player) to counts.
@@ -67,7 +67,8 @@ iterator rollThreeDirac(): int =
 proc playDirac(game: Game; player: Player): Counts =
   ## Play the game with the Dirac die.
   ## Return the counts of won games for each player.
-  if (game, player) in countsTable: return countsTable[(game, player)]
+  if (game, player) in countsTable:
+    return countsTable[(game, player)]
   let nextPlayer = 3 - player
   for val in rollThreeDirac():
     var g = game
@@ -82,4 +83,4 @@ proc playDirac(game: Game; player: Player): Counts =
   countsTable[(game, player)] = result
 
 game = save
-echo "Part 2 answer: ", game.playDirac(1)[1]
+echo "Part 2: ", game.playDirac(1)[1]
