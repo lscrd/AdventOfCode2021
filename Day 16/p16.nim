@@ -1,11 +1,9 @@
 import std/[math, strutils, sugar, tables]
 
-const
-
-  Binary = {'0': "0000", '1': "0001", '2': "0010", '3': "0011",
-            '4': "0100", '5': "0101", '6': "0110", '7': "0111",
-            '8': "1000", '9': "1001", 'A': "1010", 'B': "1011",
-            'C': "1100", 'D': "1101", 'E': "1110", 'F': "1111"}.toTable
+const Binary = {'0': "0000", '1': "0001", '2': "0010", '3': "0011",
+                '4': "0100", '5': "0101", '6': "0110", '7': "0111",
+                '8': "1000", '9': "1001", 'A': "1010", 'B': "1011",
+                'C': "1100", 'D': "1101", 'E': "1110", 'F': "1111"}.toTable
 
 type
 
@@ -129,6 +127,11 @@ let binary = collect(for d in input: Binary[d]).join()
 var lexer = initLexer(binary)
 let packets = lexer.parse()
 
-# Part 1.
-echo "Part 1 answer: ", packets.versionSum()
-echo "Part 2 answer: ", packets[0].value()
+### Part 1 ###
+
+echo "Part 1: ", packets.versionSum()
+
+
+### Part 2 ###
+
+echo "Part 2: ", packets[0].value()
