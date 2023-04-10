@@ -1,9 +1,10 @@
 import std/[sequtils, strutils]
 
-let numbers = toSeq(lines("p03.data"))
+let numbers = lines("p03.data").toSeq
 let length = numbers[0].len
 
-# Part 1.
+
+### Part 1 ###
 var gammaRate, epsilonRate = 0
 for pos in 0..<length:
   var zeroes, ones = 0
@@ -14,9 +15,10 @@ for pos in 0..<length:
   gammaRate = gammaRate shl 1 + mostCommon
   epsilonRate = epsilonRate shl 1 + leastCommon
 
-echo "Part 1 answer: ", gammaRate * epsilonRate
+echo "Part 1: ", gammaRate * epsilonRate
 
-# Part 2.
+
+### Part 2 ###
 
 proc filter(numbers: seq[string]; keepMostCommon: bool): int =
   var candidates = numbers
@@ -32,4 +34,4 @@ proc filter(numbers: seq[string]; keepMostCommon: bool): int =
 let oxygenGeneratorRating = numbers.filter(true)
 let co2ScrubberRating = numbers.filter(false)
 
-echo "Part 2 answer: ", oxygenGeneratorRating * co2ScrubberRating
+echo "Part 2: ", oxygenGeneratorRating * co2ScrubberRating
