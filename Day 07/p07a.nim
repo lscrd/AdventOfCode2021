@@ -3,7 +3,7 @@
 import std/[algorithm, sequtils, strutils]
 
 # Read and sort crab positions.
-let positions = readFile("p07.data").strip().split(',').map(parseInt).sorted()
+let positions = readLines("p07.data", 1)[0].split(',').map(parseInt).sorted()
 
 proc fuel1(positions: seq[int]; target: int): int =
   ## First formula to compute the fuel quantity needed to move to "target".
@@ -16,14 +16,18 @@ proc fuel2(positions: seq[int]; target: int): int =
     let d = abs(pos - target)
     result += d * (d + 1) div 2
 
-# Part 1.
+
+### Part 1 ###
+
 var res = int.high
 for pos in positions[0]..positions[^1]:
   res = min(res, positions.fuel1(pos))
-echo "Part 1 answer: ", res
+echo "Part 1: ", res
 
-# Part 2.
+
+### Part 2 ###
+
 res = int.high
 for pos in positions[0]..positions[^1]:
   res = min(res, positions.fuel2(pos))
-echo "Part 2 answer: ", res
+echo "Part 2: ", res
