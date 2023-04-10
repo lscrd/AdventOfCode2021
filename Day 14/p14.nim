@@ -41,14 +41,18 @@ proc elemCounts(pairCounts: PairCounts): CountTable[char] =
   for pair, count in result:
     result[pair] = count div 2
 
-# Part 1.
+
+### Part 1 ###
+
 for _ in 1..10:
   pairCounts = pairCounts.doStep()
 var counts = pairCounts.elemCounts()
-echo "Part 1 answer: ", counts.largest.val - counts.smallest.val
+echo "Part 1: ", counts.largest.val - counts.smallest.val
 
-# Part 2.
+
+### Part 2 ###
+
 for _ in 11..40:
   pairCounts = pairCounts.doStep()
 counts = pairCounts.elemCounts()
-echo "Part 2 answer: ", counts.largest.val - counts.smallest.val
+echo "Part 2: ", counts.largest.val - counts.smallest.val
