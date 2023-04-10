@@ -4,13 +4,13 @@ type Image = object
   background: char    # Background (starts with '.').
   data: seq[string]   # Actual image data.
 
-
 # Load image enhancement algorithm string and image string.
 let input = open("p20.data")
 var ieaString = input.readLine()
 discard input.readLine()  # empty line.
 var image = Image(background: '.', data: collect(for line in input.lines(): line))
 input.close()
+
 
 proc `$`(img: Image): string {.used.} =
   ## Return the image string representation.
