@@ -27,6 +27,9 @@ type
 # Costs of amphipod moves.
 const Costs = [None: 0, Amber: 1, Bronze: 10, Copper: 100, Desert: 1000]
 
+# Cache to avoid multiple computations of the same configuration.
+var cache: Table[string, int]
+
 
 func initCells(roomLines: int): Cells =
   ## Initialize the cells for "roomLines" lines of rooms.
@@ -148,10 +151,6 @@ func dist(cell1, cell2: Cell): int =
   abs(cell1.pos[0] - cell2.pos[0]) + abs(cell1.pos[1] - cell2.pos[1])
 
 
-# Cache to avoid multiple computation of the same configuration.
-var cache: Table[string, int]
-
-
 proc minimalCost(cells: Cells): int =
   ## Return the minimal cost for the given cell configuration.
 
@@ -200,13 +199,16 @@ proc minimalCost(cells: Cells): int =
   cache[str] = result
 
 
-# Part 1.
-var input = readFile("p23.data").strip().splitLines()
-var cells = input.processData()
-echo "Part 1 answer: ", cells.minimalCost()
+### Part 1 ###
 
-# Part 2.
+var input = readLines("p23.data", 1)[0].splitLines()
+var cells = input.processData()
+echo "Part 1: ", cells.minimalCost()
+
+
+### Part 2 ###
+
 input.insert("  #D#C#B#A#", 3)
 input.insert("  #D#B#A#C#", 4)
 cells = input.processData()
-echo "Part 2 answer: ", cells.minimalCost()
+echo "Part 2: ", cells.minimalCost()
